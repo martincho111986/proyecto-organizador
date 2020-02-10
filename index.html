@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--links css de bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--fin de link css bootstrap-->
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- encabezado -->
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-6">
+              <h2>Organizador</h2>
+          </div>
+          <div class="col-6">
+              <input type="text" id="tareaInput">
+              <button class="btn btn-primary" onclick="agregarTarea()">agregar tarea</button c>
+          </div>
+      </div>
+  </div>
+  
+  <!-- titulos -->
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-4 titulo1"><h2>Tareas</h2></div>
+          <div class="col-4 titulo2"><h2>En Proceso</h2></div>
+          <div class="col-4 titulo3"><h2>Finalizados</h2></div>
+      </div>
+  </div>
+  <div class="container-fluid">
+      <div class="row listas" id="listas">
+          <div class="col-4 listas1">
+              <ul id="ulTareas" class="list-group">
+                  
+
+              </ul>
+            </div>
+          <div class="col-4 listas2">
+              <ul id="ulProcesos" class="list-group">
+               
+
+              </ul>
+
+          </div>
+          <div class="col-4 listas3">
+              <ul id="ulCompletos" class="list-group">
+              
+              </ul>
+
+          </div>
+      </div>
+  </div>
+  <footer>
+      <div class="container">
+
+      </div>
+  </footer>
+
+   <!-- MODAL -->
+
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" id="tituloModal">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="ingresarTexto">
+            <div class="lista-modal">
+                <!-- <h4>Lista Recordatorios</h4> -->
+                <ul id="ulRecordatorio">
+                </ul>
+            </div>
+         <textarea name="" id="textoModal" cols="50" rows="0"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="saveChanges()" id="botonRecordatorio">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script src="./js/app.js"></script>
+    <!--links js de bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!--links js de bootstrap-->
+</body>
+</html>
