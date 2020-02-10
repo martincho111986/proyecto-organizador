@@ -1,5 +1,6 @@
 //TAREAS
 const listas = {tareas: [], procesos: []}
+JSON.parse(localStorage.getItem("listas"))
 let ulTareas = document.getElementById('ulTareas');
 let ulRecordatorio = document.getElementById('ulRecordatorio');
 
@@ -7,9 +8,9 @@ let listarTareas =() =>{
     ulTareas.innerHTML = '';
     listas.tareas.forEach(function(item, index){
         console.log(item)
-        ulTareas.innerHTML += `<li class="list-group-item m-2" id="listas">
+        ulTareas.innerHTML += `<li class="list-group-item m-2" id="drag1" draggable="true" ondragstart="drag(event)">
         <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="llenarModal(${index}, 'tareas')">${item.titulo}</a>
-         <button class="btn btn-primary" onclick="pasarProceso(${index})"> + </button>
+         
         </li>`;
         console.log(index);
 
@@ -34,10 +35,12 @@ function saveChanges(indexTarea){
         ulRecordatorio.innerHTML += item ? `<li>${item}</li>` : '';
     });
     document.querySelector("#botonRecordatorio").dataset.id = index;
+
+    if(nota !== ""){
+        
+    }
 }
-function listarNotas(){
-    
-}
+
 
 let agregarTarea = ()=>{
     let inputText = document.getElementById('tareaInput').value;
@@ -52,6 +55,7 @@ let agregarTarea = ()=>{
         document.getElementById('tareaInput').value = '';
         listarTareas();
     }
+    localStorage.setItem("listas", JSON.stringify(listas));
 }
 //FIN TAREAS
 
@@ -62,10 +66,10 @@ let ulProcesos = document.getElementById('ulProcesos');
 let listarProcesos = ()=>{
     ulProcesos.innerHTML ='';
         listas.procesos.forEach((item, index)=>{
-        ulProcesos.innerHTML += `<li class="list-group-item m-2" id="listas1">
-         <button class="btn btn-primary" onclick="volverTareas(${index}, 'tareas')"></button>
+        ulProcesos.innerHTML += `<li class="list-group-item m-2" id="drag1" draggable="true" ondragstart="drag(event)">
+         
          <a href="#" data-toggle="modal" data-target="#exampleModal" onclick="llenarModal(${index}, 'procesos')">${item.titulo}</a>  
-         <button class="btn btn-primary" onclick="pasarCompletados(${index})"></button>
+         <button class="btn btn-primary" onclick="pasarCompletados(${index})"> > </button>
          </li>`;
     })
 }
@@ -77,6 +81,7 @@ listarProcesos();
 const volverTareas = (index)=>{
     listas.tareas.push(listas.procesos[index]);
     listas.procesos.splice(index, 1);
+    localStorage.setItem("listas", JSON.stringify(listas));
     listarProcesos();
     listarTareas();
 }
@@ -84,10 +89,11 @@ const volverTareas = (index)=>{
 let pasarProceso = (index) =>{
     listas.procesos.push(listas.tareas[index]);
     listas.tareas.splice(index, 1);
+    localStorage.setItem("listas", JSON.stringify(listas));
     listarProcesos();
     listarTareas();
 }
-//MODAL
+
 
 
 //FIN PROCESOS
@@ -96,13 +102,13 @@ let pasarProceso = (index) =>{
 
 // COMPLETADOS
 
-let completados = [];
+let completados = JSON.parse(localStorage.getItem("agregarCompletados")) || [];
 let ulCompletos = document.getElementById("ulCompletos");
 
 let listaCompletados = () => {
     ulCompletos.innerHTML="";
     completados.forEach((item, i)=>{
-    ulCompletos.innerHTML += `<li class="list-group-item m-2" id="listas2">
+    ulCompletos.innerHTML += `<li class="list-group-item m-2" id="drag1" draggable="true" ondragstart="drag(event)">
     <a href="#" >${item.titulo}</a>  
     <i class="fas fa-check"></i>
     </li>`
@@ -114,6 +120,8 @@ listaCompletados();
 let pasarCompletados = (i)=>{
     completados.push(listas.procesos[i]);
     listas.procesos.splice(i, 1);
+    localStorage.setItem("agregarCompletados", JSON.stringify(completados));
+    localStorage.setItem("listas", JSON.stringify(listas));
     listarProcesos();
     listaCompletados();
 }
@@ -146,24 +154,66 @@ let pasarCompletados = (i)=>{
 
 // drag and drop
 
-// const lista = document.getElementById('listas');
-// const lista1 = document.getElementById('listas1');
-// const lista2 = document.getElementById('listas2');
+// const lista = document.getElementById('ulTareas');
+// const lista1 = document.getElementById('ulProcesos');
+// const lista2 = document.getElementById('ulCompletos');
 
 
 
 
-// new Sortable(lista, {
-//     group: 'shared', // set both lists to same group
-//     animation: 150
+// Sortable.create(lista, {
+//     group: 'listas',
+//     ghostClass: 'blue-background-class',
+//     animation: 150,
+//     swap: true, // Enable swap plugin
+// 	swapClass: 'highlight', // The class applied to the hovered swap item
+
+    
 // });
 
-// new Sortable(lista1, {
-//     group: 'shared',
-//     animation: 150
+// Sortable.create(lista1, {
+//     group: 'listas',
+//     ghostClass: 'blue-background-class',
+//     animation: 150,
+//     swap: true, // Enable swap plugin
+// 	swapClass: 'highlight', // The class applied to the hovered swap item
+
+    
 // });
 
-// new Sortable(lista2, {
-//     group: 'shared',
-//     animation: 150
+// Sortable.create(lista2, {
+//     group: 'listas',
+//     ghostClass: 'blue-background-class',
+//     animation: 150,
+//     swap: true, // Enable swap plugin
+// 	swapClass: 'highlight', // The class applied to the hovered swap item
+	
+    
 // });
+
+function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
+
+ 
+
+
